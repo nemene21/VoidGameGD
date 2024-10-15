@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=2]
+
+[sub_resource type="Shader" id=1]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+uniform vec4 color : hint_color;
+
+uniform float distanceOffset : hint_range(-1.0, 1.0);
+
+uniform float distanceMultiplier : hint_range(0.0, 4.0);
+
+uniform float noisyness : hint_range(0.0, 10.0);
+
+uniform vec2 CENTER;
+
+void fragment() {
+	
+	float dist = clamp(distance(UV, CENTER) * 2.0 + distanceOffset, 0.0, 1.0) * distanceMultiplier * (1.0 + texture(TEXTURE, UV).r * noisyness);
+	
+	COLOR = vec4(color.rgb, dist * color.a);
+	
+}"
+custom_defines = ""
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/color = Color( 0, 0, 0, 1 )
+shader_param/distanceOffset = -1.0
+shader_param/distanceMultiplier = 1.158
+shader_param/noisyness = 0.0
+shader_param/CENTER = Vector2( 0.5, 0.5 )
+
+[sub_resource type="OpenSimplexNoise" id=3]
+
+[sub_resource type="NoiseTexture" id=4]
+width = 1024
+height = 600
+noise = SubResource( 3 )
+
+[node name="Vignette" type="Sprite"]
+material = SubResource( 2 )
+texture = SubResource( 4 )
+centered = false

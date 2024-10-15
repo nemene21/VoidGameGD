@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/framework/scripts/OutlinedSprite.gd" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 color : hint_color;
+
+void fragment() {
+	
+	COLOR = vec4(color.rgb, color.a * texture(TEXTURE, UV).a);
+	
+}"
+custom_defines = ""
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/color = Color( 0, 0, 0, 1 )
+
+[node name="OutlinedSprite" type="Sprite"]
+texture = ExtResource( 2 )
+script = ExtResource( 1 )
+outline_width = 1.0
+
+[node name="o000" type="Sprite" parent="."]
+show_behind_parent = true
+material = SubResource( 2 )
+position = Vector2( 1, 0 )
+texture = ExtResource( 2 )
+
+[node name="o090" type="Sprite" parent="."]
+show_behind_parent = true
+material = SubResource( 2 )
+position = Vector2( 0.000796274, 1 )
+texture = ExtResource( 2 )
+
+[node name="o180" type="Sprite" parent="."]
+show_behind_parent = true
+material = SubResource( 2 )
+position = Vector2( -0.999999, 0.00159255 )
+texture = ExtResource( 2 )
+
+[node name="o270" type="Sprite" parent="."]
+show_behind_parent = true
+material = SubResource( 2 )
+position = Vector2( -0.00238894, -0.999997 )
+texture = ExtResource( 2 )

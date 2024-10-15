@@ -1,0 +1,73 @@
+[gd_scene load_steps=7 format=2]
+
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+
+uniform sampler2D curve;
+uniform vec4 color : hint_color;
+const vec2 center = vec2(.5, .5);
+
+uniform int rays;
+
+const float HALF_PI = 1.57079632679;
+const float     PI2 = 6.28318530718;
+const float      PI = 3.14159265359;
+
+uniform float thickness : hint_range(0.0, 0.5);
+
+float atan2(vec2 vector) {
+	
+	return atan( vector.y / vector.x ) + PI * float(vector.x < 0.0);
+	
+}
+
+void fragment() {
+	
+	vec2 difference = UV - center;
+	
+	float dist  = clamp(length(difference) * 2.0, 0.0, 1.0);
+	float angle = atan2(difference);
+	
+	int mask = 0;
+	
+	float single_angle = PI2 / float(rays);
+	
+	for (float i = 0.0; i <= float(rays + 5); i++) {
+		
+		mask += int(abs(angle - (i * single_angle - PI)) < thickness);
+		
+	}
+	
+	// mask = min(mask, 1);
+	
+	COLOR = vec4(color.rgb, texture(curve, vec2(dist, 0.0)).r * color.a) * float(mask);
+	
+}"
+custom_defines = ""
+
+[sub_resource type="Curve" id=6]
+_data = [ Vector2( 0, 0 ), 0.0, 0.499806, 0, 0, Vector2( 0.330882, 0.390909 ), 3.26753, 3.26753, 0, 0, Vector2( 0.529412, 0.745455 ), 0.0, 0.0, 0, 0, Vector2( 0.75, 0.4 ), -3.8993, -3.8993, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=3]
+resource_local_to_scene = true
+curve = SubResource( 6 )
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = SubResource( 5 )
+shader_param/color = Color( 1, 1, 1, 1 )
+shader_param/rays = 7
+shader_param/thickness = 0.226
+shader_param/curve = SubResource( 3 )
+
+[sub_resource type="OpenSimplexNoise" id=7]
+period = 10.9
+
+[sub_resource type="NoiseTexture" id=8]
+width = 100
+height = 100
+noise = SubResource( 7 )
+
+[node name="ShineRay" type="Sprite"]
+material = SubResource( 4 )
+texture = SubResource( 8 )
