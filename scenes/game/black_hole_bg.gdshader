@@ -18,6 +18,7 @@ const vec4 BLACK = vec4(0, 0, 0, 1);
 const vec4 ORANGE = vec4(0.85, 0.53, 0.24, 1);
 uniform sampler2D hole_colors;
 uniform sampler2D noise: repeat_enable;
+uniform sampler2D stars: repeat_enable;
 
 float angle(vec2 v) {
     return atan(v.y, v.x);
@@ -55,7 +56,7 @@ vec3 get_color(float anim) {
 
 void fragment() {
     vec2 uv = UV;
-	COLOR = vec4(0, 0, 0, 1);
+	COLOR = vec4(0, 0, 0, 0);
 
     uv -= vec2(.5, .5);
     uv.x *= aspect_ratio;
@@ -112,5 +113,9 @@ void fragment() {
         COLOR.rgb = max_color(
             COLOR.rgb, get_color(smoothstep(1.0, 0.5, anim) * light * noise_value)
         );
+    }
+	
+	if ((COLOR.r + COLOR.g + COLOR.b) > 0.1) {
+        COLOR.a = 1.0;
     }
 }

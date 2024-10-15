@@ -39,7 +39,7 @@ void fragment() {
 	
 	// Get on screen pixel color (pixel.r and pixel.b are offset due to chromatic abberation)
 	vec2 snap = 1.0 / res;
-	vec2 snapped_uv = floor(uv / snap) * snap;
+	vec2 snapped_uv = uv;
 	vec4 pixel = vec4(
 		texture(screen_texture, snapped_uv + 0.005 * chromatic_dist).r,
 		texture(screen_texture, snapped_uv).g,
