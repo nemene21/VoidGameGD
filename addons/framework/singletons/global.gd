@@ -1,5 +1,9 @@
 extends Node
 
+func dlerp(a: Variant, b: Variant, c: Variant) -> Variant:
+	var blend = 1.0 - pow(0.5, c)
+	return lerp(a, b, blend)
+
 func get_files(path: String) -> Array[String]:
 	var dir = DirAccess.open(path)
 	

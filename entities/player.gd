@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-@export var speed := 5000.0
-@export var acceleration := 300.0
+var speed: float = 400
+var acceleration: float = 20 
 
 @onready var entity: Entity = $Entity
 
@@ -11,7 +11,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var input = Input.get_vector("left", "right", "up", "down").normalized()
-	velocity = velocity.move_toward(input * speed, acceleration * delta)
+	velocity = Global.dlerp(velocity, input * speed, acceleration * delta)
 	move_and_slide()
 	
 	$Label.text = str(entity.get_component("Health").hp)
