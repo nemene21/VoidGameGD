@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://br1ffiocblepg"]
+[gd_scene load_steps=3 format=3 uid="uid://br1ffiocblepg"]
 
 [ext_resource type="Script" path="res://addons/framework/singletons/audio_manager.gd" id="1_3q8ug"]
+[ext_resource type="AudioStream" uid="uid://b4a31ud6v2kqh" path="res://scenes/game/player/step.mp3" id="2_unyvi"]
 
 [node name="AudioManager" type="Node"]
 script = ExtResource("1_3q8ug")
+sounds_to_add = Array[Resource]([ExtResource("2_unyvi")])

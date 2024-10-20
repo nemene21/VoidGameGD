@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://bfgtctcmlskph"]
+
+[ext_resource type="Script" path="res://scenes/game/player/player.gd" id="1_687nu"]
+[ext_resource type="Shader" path="res://flash.gdshader" id="2_bc4ku"]
+[ext_resource type="PackedScene" uid="uid://po4hu6oasy3q" path="res://scenes/components/leg/leg.tscn" id="4_anix0"]
+[ext_resource type="PackedScene" uid="uid://bueq2rd2q8dot" path="res://scenes/components/leg/LegManager.tscn" id="4_auqsm"]
+[ext_resource type="Texture2D" uid="uid://bhkpwnqvlpxdm" path="res://scenes/game/player/head.png" id="4_ld4oe"]
+[ext_resource type="Texture2D" uid="uid://dc05jc0gbcv6l" path="res://scenes/game/player/body.png" id="4_pw48g"]
+[ext_resource type="PackedScene" uid="uid://r4ujw7r31aam" path="res://scenes/components/move/move.tscn" id="7_3aa0r"]
+[ext_resource type="PackedScene" uid="uid://sij4mgl0we5" path="res://scenes/components/health/health.tscn" id="8_hvo1n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vp34t"]
+resource_local_to_scene = true
+shader = ExtResource("2_bc4ku")
+shader_parameter/flash = null
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("legs", "move_comp")]
+script = ExtResource("1_687nu")
+legs = NodePath("Body/Legs")
+move_comp = NodePath("Move")
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="Legs" type="Node2D" parent="Body"]
+
+[node name="Foot" type="Node2D" parent="Body/Legs"]
+position = Vector2(0, -8)
+
+[node name="Leg" parent="Body/Legs/Foot" node_paths=PackedStringArray("foot", "anchor", "manager") instance=ExtResource("4_anix0")]
+position = Vector2(0.4, 0.4)
+foot = NodePath("..")
+anchor = NodePath("../../../Body/LegAnchor")
+max_distance = 10.0
+anim_speed = 25.0
+manager = NodePath("../../LegManager")
+
+[node name="Foot2" type="Node2D" parent="Body/Legs"]
+position = Vector2(0, 8)
+
+[node name="Leg2" parent="Body/Legs/Foot2" node_paths=PackedStringArray("foot", "anchor", "manager") instance=ExtResource("4_anix0")]
+foot = NodePath("..")
+anchor = NodePath("../../../Body/LegAnchor2")
+max_distance = 10.0
+anim_speed = 25.0
+manager = NodePath("../../LegManager")
+
+[node name="LegManager" parent="Body/Legs" node_paths=PackedStringArray("legs") instance=ExtResource("4_auqsm")]
+legs = [NodePath("../Foot/Leg"), NodePath("../Foot2/Leg2")]
+
+[node name="Body" type="Sprite2D" parent="Body"]
+rotation = 1.5708
+texture = ExtResource("4_pw48g")
+
+[node name="LegAnchor" type="Node2D" parent="Body/Body"]
+position = Vector2(-8, 1.90735e-06)
+rotation = -1.5708
+
+[node name="LegAnchor2" type="Node2D" parent="Body/Body"]
+position = Vector2(8, 0)
+
+[node name="Head" type="Sprite2D" parent="Body"]
+material = SubResource("ShaderMaterial_vp34t")
+texture = ExtResource("4_ld4oe")
+
+[node name="Health" parent="." instance=ExtResource("8_hvo1n")]
+max_hp = 4.0
+hp = 4.0
+
+[node name="Move" parent="." instance=ExtResource("7_3aa0r")]
+
+[connection signal="died" from="Health" to="." method="_on_health_died"]

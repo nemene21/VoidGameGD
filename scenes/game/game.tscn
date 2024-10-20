@@ -1,47 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://c7j084o2yeyx2"]
+[gd_scene load_steps=2 format=3 uid="uid://c7j084o2yeyx2"]
 
-[ext_resource type="PackedScene" uid="uid://bfgtctcmlskph" path="res://entities/player.tscn" id="1_y2jly"]
-[ext_resource type="Shader" path="res://scenes/game/black_hole_bg.gdshader" id="2_mki0i"]
-[ext_resource type="Texture2D" uid="uid://cowuxhosbyilm" path="res://scenes/game/hole_gradient.png" id="3_q7o44"]
-[ext_resource type="Texture2D" uid="uid://xctl3d8y51mq" path="res://scenes/game/stars.png" id="4_2lhdl"]
-[ext_resource type="Shader" path="res://scenes/game/star_bg.gdshader" id="5_i5hpp"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e1gt6"]
-shader = ExtResource("5_i5hpp")
-shader_parameter/stars = ExtResource("4_2lhdl")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_cy0s1"]
-frequency = 0.0147
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_25bji"]
-seamless = true
-noise = SubResource("FastNoiseLite_cy0s1")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gmsft"]
-shader = ExtResource("2_mki0i")
-shader_parameter/center = Vector2(1.278, 0.5)
-shader_parameter/hole_radius = 0.3
-shader_parameter/ring_radius = 0.85
-shader_parameter/halo_radius = 0.45
-shader_parameter/zoom = 2.0
-shader_parameter/offset = Vector2(0.25, 0.25)
-shader_parameter/hole_colors = ExtResource("3_q7o44")
-shader_parameter/noise = SubResource("NoiseTexture2D_25bji")
-shader_parameter/stars = ExtResource("4_2lhdl")
+[ext_resource type="PackedScene" uid="uid://bfgtctcmlskph" path="res://scenes/game/player/player.tscn" id="1_y2jly"]
 
 [node name="Game" type="Node2D"]
+position = Vector2(153, 108)
 
 [node name="Player" parent="." instance=ExtResource("1_y2jly")]
-
-[node name="StarBg" type="ColorRect" parent="."]
-z_index = -1000
-material = SubResource("ShaderMaterial_e1gt6")
-offset_right = 320.0
-offset_bottom = 180.0
-color = Color(0, 0, 0, 1)
-
-[node name="BlackHoleBg" type="ColorRect" parent="."]
-z_index = -1000
-material = SubResource("ShaderMaterial_gmsft")
-offset_right = 320.0
-offset_bottom = 180.0
