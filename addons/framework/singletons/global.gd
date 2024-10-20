@@ -1,8 +1,5 @@
 extends Node
 
-func _ready() -> void:
-	RenderingServer.set_default_clear_color(Color.BLACK)
-
 func dlerp(a: Variant, b: Variant, c: Variant) -> Variant:
 	var blend = 1.0 - pow(0.5, c)
 	return lerp(a, b, blend)

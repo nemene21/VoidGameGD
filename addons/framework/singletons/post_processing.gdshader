@@ -50,5 +50,5 @@ void fragment() {
 	// Cut out edges from the crt warping
 	float mask = 1.0 - float(uv.x < .0 ||uv.x > 1.0 || uv.y < .0 || uv.y > 1.0);
 
-	COLOR = vec4(lerp(pixel, vignette_color, dist).rgb * mask + randf(UV) * 0.01, 1.0);
+	COLOR = vec4(lerp(pixel, vignette_color, dist).rgb * mask + randf(UV + TIME) * 0.01, 1.0);
 }
