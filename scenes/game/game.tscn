@@ -1,8 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://c7j084o2yeyx2"]
+[gd_scene load_steps=4 format=3 uid="uid://c7j084o2yeyx2"]
 
+[ext_resource type="Script" path="res://scenes/game/game.gd" id="1_7be3n"]
 [ext_resource type="PackedScene" uid="uid://bfgtctcmlskph" path="res://scenes/game/player/player.tscn" id="1_y2jly"]
+[ext_resource type="PackedScene" uid="uid://dvc3qdphq1mqe" path="res://scenes/game/tram/chair.tscn" id="3_mh2uu"]
 
 [node name="Game" type="Node2D"]
 position = Vector2(153, 108)
+script = ExtResource("1_7be3n")
 
 [node name="Player" parent="." instance=ExtResource("1_y2jly")]
+
+[node name="Chair" parent="." instance=ExtResource("3_mh2uu")]
+position = Vector2(-132, 45)

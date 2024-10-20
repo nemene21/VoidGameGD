@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://cl2adjmh4ig3l"]
+
+[ext_resource type="Texture2D" uid="uid://c8bikfsj3a5ly" path="res://icon.svg" id="1_xapob"]
+[ext_resource type="PackedScene" uid="uid://bis3tom4l5xau" path="res://scenes/components/interaction/interaction.tscn" id="2_oow2w"]
+
+[node name="NPC" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_xapob")
+
+[node name="Interaction" parent="." instance=ExtResource("2_oow2w")]

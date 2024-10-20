@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bfgtctcmlskph"]
+[gd_scene load_steps=12 format=3 uid="uid://bfgtctcmlskph"]
 
 [ext_resource type="Script" path="res://scenes/game/player/player.gd" id="1_687nu"]
 [ext_resource type="Shader" path="res://flash.gdshader" id="2_bc4ku"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bhkpwnqvlpxdm" path="res://scenes/game/player/head.png" id="4_ld4oe"]
 [ext_resource type="Texture2D" uid="uid://dc05jc0gbcv6l" path="res://scenes/game/player/body.png" id="4_pw48g"]
 [ext_resource type="PackedScene" uid="uid://r4ujw7r31aam" path="res://scenes/components/move/move.tscn" id="7_3aa0r"]
+[ext_resource type="PackedScene" uid="uid://iiwudjl4wglb" path="res://scenes/components/hurtbox/hurtbox.tscn" id="7_6c3av"]
 [ext_resource type="PackedScene" uid="uid://sij4mgl0we5" path="res://scenes/components/health/health.tscn" id="8_hvo1n"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vp34t"]
@@ -14,6 +15,9 @@ resource_local_to_scene = true
 shader = ExtResource("2_bc4ku")
 shader_parameter/flash = null
 shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fkmad"]
+radius = 8.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("legs", "move_comp")]
 script = ExtResource("1_687nu")
@@ -68,5 +72,12 @@ max_hp = 4.0
 hp = 4.0
 
 [node name="Move" parent="." instance=ExtResource("7_3aa0r")]
+
+[node name="Hurtbox" parent="." instance=ExtResource("7_6c3av")]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_fkmad")
 
 [connection signal="died" from="Health" to="." method="_on_health_died"]
