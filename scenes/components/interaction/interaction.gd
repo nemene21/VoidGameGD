@@ -10,7 +10,10 @@ func is_active() -> bool:
 
 func _process(delta: float) -> void:
 	$Label.position.y = -15 + sin(Global.time * PI) * 4
-	$Label.modulate.a = Global.dlerp($Label.modulate.a, float(is_active()), delta * 40) 
+	$Label.modulate.a = Global.dlerp($Label.modulate.a, float(is_active()), delta * 40)
+	
+	if is_active() and Input.is_action_just_pressed("interact"):
+		interacted.emit()
 
 func _on_area_entered(area: Area2D) -> void:
 	player_in = true
