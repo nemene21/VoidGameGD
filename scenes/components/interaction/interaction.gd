@@ -3,21 +3,21 @@ class_name InteractionPoint
 
 signal interacted
 var player_in := false
+var closest := false
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func is_active() -> bool:
+	return player_in and closest
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
-
+	$Label.position.y = -15 + sin(Global.time * PI) * 4
+	$Label.modulate.a = Global.dlerp($Label.modulate.a, float(is_active()), delta * 40) 
 
 func _on_area_entered(area: Area2D) -> void:
 	player_in = true
-	$Label.show()
+	var player := area.get_parent() as Player
+	player.interactors.append(self)
 
 func _on_area_exited(area: Area2D) -> void:
 	player_in = false
-	$Label.hide()
+	var player := area.get_parent() as Player
+	player.interactors.remove_at(player.interactors.find(self))

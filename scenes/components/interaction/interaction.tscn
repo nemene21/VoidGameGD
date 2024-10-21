@@ -14,12 +14,12 @@ script = ExtResource("1_r5xy0")
 shape = SubResource("CircleShape2D_em21k")
 
 [node name="Label" type="Label" parent="."]
-visible = false
 texture_filter = 1
-offset_left = -42.0
-offset_top = -14.0
-offset_right = 47.0
-offset_bottom = 16.0
+offset_left = -45.0
+offset_top = -15.0
+offset_right = 45.0
+offset_bottom = 15.0
+pivot_offset = Vector2(45, 15)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 1

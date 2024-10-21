@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 var speed: float = 100
 var acceleration: float = 15
@@ -6,8 +7,27 @@ var acceleration: float = 15
 @export var move_comp: MoveComp
 var direction := Vector2.ZERO
 
+var interactors: Array[InteractionPoint]
+
 func _ready() -> void:
 	VfxManager.set_target(get_parent())
+
+## Find closest interactor and make it active
+func handle_interactors() -> void:
+	var best_len := 99999
+	var best_pos := Vector2.ZERO
+	
+	for interactor in interactors:
+		interactor.closest = false
+		var leng := global_position.distance_to(interactor.global_position)
+		if leng < best_len:
+			best_len = leng
+			best_pos = interactor.global_position
+	
+	for interactor in interactors:
+		if interactor.global_position == best_pos:
+			interactor.closest = true
+			break
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -32,6 +52,8 @@ func _process(delta: float) -> void:
 	)
 	
 	legs.global_position = global_position + move_comp.get_speed() * 0.25
+	
+	handle_interactors()
 
 func _on_health_died() -> void:
 	VfxManager.explode_sprite($Sprite)
