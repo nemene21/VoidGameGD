@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhtmepackc5n8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_al2gb"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 6.0
+expand_margin_top = 2.0
+expand_margin_right = 4.0
+expand_margin_bottom = 2.0
+
+[node name="SpeechBubble" type="PanelContainer"]
+self_modulate = Color(0, 0, 0, 1)
+offset_right = 145.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_al2gb")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "This is text from a person wow!"
+autowrap_mode = 3
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(7, 39, 2, 56, 19, 39)

@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name Player
 
 var speed: float = 100
-var acceleration: float = 15
+var acceleration: float = 5
 @export var legs: Node2D
 @export var move_comp: MoveComp
 var direction := Vector2.ZERO

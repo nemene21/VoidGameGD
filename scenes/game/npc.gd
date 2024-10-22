@@ -12,4 +12,7 @@ func _process(delta: float) -> void:
 
 
 func _on_interaction_interacted() -> void:
-	print("This has been interacted with: ", name)
+	var scene: GameScene = get_tree().current_scene
+	var animator: AnimationPlayer = scene.get_node("UI/AnimationPlayer")
+	
+	animator.play("conversation_start")
