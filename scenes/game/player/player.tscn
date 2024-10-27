@@ -38,6 +38,7 @@ anchor = NodePath("../../../Body/LegAnchor")
 max_distance = 10.0
 anim_speed = 25.0
 manager = NodePath("../../LegManager")
+leg_color = Color(0.0980392, 0.235294, 0.243137, 1)
 
 [node name="Foot2" type="Node2D" parent="Body/Legs"]
 position = Vector2(0, 8)
@@ -48,6 +49,7 @@ anchor = NodePath("../../../Body/LegAnchor2")
 max_distance = 10.0
 anim_speed = 25.0
 manager = NodePath("../../LegManager")
+leg_color = Color(0.0980392, 0.235294, 0.243137, 1)
 
 [node name="LegManager" parent="Body/Legs" node_paths=PackedStringArray("legs") instance=ExtResource("4_auqsm")]
 legs = [NodePath("../Foot/Leg"), NodePath("../Foot2/Leg2")]

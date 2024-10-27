@@ -10,10 +10,15 @@ uniform float distance_pow : hint_range(1.0, 5.0, 0.1);
 uniform float distance_multiplyer : hint_range(0.0, 4.0, 0.1);
 uniform float chromatic_abberation : hint_range(.0, 1.0);
 uniform vec2 res = vec2(320, 180);
+uniform float saturation;
+uniform vec3 tint = vec3(1, 1, 1);
 
 uniform float warp : hint_range(-10.0, 10.0, 0.1) = .0;
 
 vec4 lerp(vec4 a, vec4 b, float c) {
+	return a + (b - a) * c;
+}
+vec3 lerp3(vec3 a, vec3 b, float c) {
 	return a + (b - a) * c;
 }
 
@@ -51,4 +56,7 @@ void fragment() {
 	float mask = 1.0 - float(uv.x < .0 ||uv.x > 1.0 || uv.y < .0 || uv.y > 1.0);
 
 	COLOR = vec4(lerp(pixel, vignette_color, dist).rgb * mask + randf(UV + TIME) * 0.01, 1.0);
+	vec3 average = vec3(1,1,1) * (COLOR.r + COLOR.g + COLOR.b) * 0.33;
+	COLOR.rgb = lerp3(COLOR.rgb, average, 1.0 - saturation);
+	COLOR.rgb *= tint;
 }

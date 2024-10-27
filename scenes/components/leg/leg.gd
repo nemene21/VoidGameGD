@@ -9,8 +9,12 @@ class_name Leg
 @onready var ultimative_position := global_position
 var step_allowed := false
 @export var manager: LegManager = null
+@export var leg_color: Color
 
 var y_vel := .0
+
+func _ready() -> void:
+	$Line.default_color = leg_color
 
 func allowed_by_manager() -> bool:
 	if manager == null:
